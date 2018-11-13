@@ -24,10 +24,9 @@ function listPeople(result) {
 
 function createList(search) {
   console.log('Searching...');
-  const query = `SELECT * FROM famous_people
-                 WHERE first_name LIKE '%${search}%';
-                `
-  client.query(query, (err, result) => {
+  client.query(`SELECT * FROM famous_people
+                WHERE first_name LIKE $1::text;
+               `, [search], (err, result) => {
     if (err) {
       return console.error('error: ', err);
     }
